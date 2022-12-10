@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+    <script
+      src="https://kit.fontawesome.com/37007fa821.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Frontend Mentor | Multi-step form</title>
+  </head>
+  <body>
+    <main>
+      <!-- Sidebar start -->
+      <aside class="navigation__sidebar">
+        <div class="navigation__active__sidebar__section">
+          <div class="steps step1">
+            <div class="rounded__number__container active__step">1</div>
+            <div class="step__textContainer">
+              <p>Step 1</p>
+              <h3>Your info</h3>
+            </div>
+          </div>
+
+          <div class="steps step2">
+            <div class="rounded__number__container">2</div>
+            <div class="step__textContainer">
+              <p>Step 2</p>
+              <h3>Select plan</h3>
+            </div>
+          </div>
+
+          <div class="steps step3">
+            <div class="rounded__number__container">3</div>
+            <div class="step__textContainer">
+              <p>Step 3</p>
+              <h3>Add-ons</h3>
+            </div>
+          </div>
+
+          <div class="steps step4">
+            <div class="rounded__number__container">4</div>
+            <div class="step__textContainer">
+              <p>Step 4</p>
+              <h3>Summary</h3>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <!-- Sidebar end -->
+
+      <!-- Steps section -->
+      <section class="navigation__main__content">
+        <div class="encapsulator">
+          <div class="first__container iterator">
+            <h2 class="heading">Personal info</h2>
+            <p class="message">
+              Please provide your name, email address, and phone number.
+            </p>
+
+            <form action="">
+              <div class="input_box_section">
+                <div class="inputs__name__section">
+                  <p>Name</p>
+                  <p class="errorMsg"></p>
+                </div>
+
+                <input
+                  type="text"
+                  placeholder="e.g. Stephen King"
+                  class="inputName"
+                  required
+                />
+              </div>
+
+              <div class="input_box_section">
+                <div class="inputs__name__section">
+                  <p>Email Address</p>
+                  <p class="errorMsg"></p>
+                </div>
+
+                <input
+                  type="email"
+                  placeholder="e.g. stephenking@lorem.com"
+                  class="inputEmail"
+                />
+              </div>
+
+              <div class="input_box_section">
+                <div class="inputs__name__section">
+                  <p>Phone Number</p>
+                  <p class="errorMsg"></p>
+                </div>
+                <input
+                  type="number"
+                  placeholder="e.g. +1 234 567 890"
+                  required
+                  class="inputNumber"
+                />
+              </div>
+
+              <button>Next Step</button>
+            </form>
+          </div>
+          <!-- End of the first step -->
+
+          <!-- Beginning of the second -->
+          <div class="second__container iterator hide">
+            <h2 class="heading">Select your plan</h2>
+            <p class="message">
+              You have the option of monthly or yearly billing.
+            </p>
+
+            <div class="plan__container">
+              <div class="plan plan__detail__selected">
+                <figcaption>
+                  <img
+                    src="./assets/images/icon-arcade.svg"
+                    alt="arcade plan icon"
+                  />
+                </figcaption>
+
+                <div class="plan__detail">
+                  <h3 class="plan__name">Arcade</h3>
+                  <p class="plan__pricing">$9/mo</p>
+                  <p class="hide unique">$90/yr</p>
+                  <p class="yearly__pricing hide">2 months free</p>
+                </div>
+              </div>
+
+              <div class="plan">
+                <figcaption>
+                  <img
+                    src="./assets/images/icon-advanced.svg"
+                    alt="advanced plan icon"
+                  />
+                </figcaption>
+
+                <div class="plan__detail">
+                  <h3 class="plan__name">Advanced</h3>
+                  <p class="plan__pricing">$12/mo</p>
+                  <p class="hide unique">$120/yr</p>
+                  <p class="yearly__pricing hide">2 months free</p>
+                </div>
+              </div>
+
+              <div class="plan">
+                <figcaption>
+                  <img src="./assets/images/icon-pro.svg" alt="pro plan icon" />
+                </figcaption>
+
+                <div class="plan__detail">
+                  <h3 class="plan__name">Pro</h3>
+                  <p class="plan__pricing">$15/mo</p>
+                  <p class="hide unique">$150/yr</p>
+                  <p class="yearly__pricing hide">2 months free</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="toggle__section">
+              <p class="plan__active">Monthly</p>
+              <i class="fa-solid fa-toggle-off"></i>
+              <p>Yearly</p>
+            </div>
+
+            <button>Next Step</button>
+            <a class="navigate__back" href="#">Go Back</a>
+          </div>
+          <!-- End of second step -->
+
+          <!-- Beginning of third step -->
+          <div class="third__step iterator hide">
+            <h2 class="heading">Pick add-ons</h2>
+            <p class="message">Add-ons help enhance your gaming experience.</p>
+
+            <div class="add-ons__container">
+              <div class="add-on checked">
+                <input type="checkbox" checked />
+
+                <div class="add-on_to_be_selected">
+                  <p>Online service</p>
+                  <p>Access to multiplayer games</p>
+                </div>
+
+                <p>+$1/mo</p>
+              </div>
+
+              <div class="add-on checked">
+                <input type="checkbox" checked />
+
+                <div class="add-on_to_be_selected">
+                  <p>Online service</p>
+                  <p>Access to multiplayer games</p>
+                </div>
+
+                <p>+$1/mo</p>
+              </div>
+
+              <div class="add-on">
+                <input type="checkbox" />
+
+                <div class="add-on_to_be_selected">
+                  <p>Online service</p>
+                  <p>Access to multiplayer games</p>
+                </div>
+
+                <p>+$1/mo</p>
+              </div>
+            </div>
+
+            <button>Next Step</button>
+            <a class="navigate__back" href="#">Go Back</a>
+          </div>
+          <!-- End of third step -->
+
+          <!-- Beginning of fourth and final step.-->
+          <div class="fourth__step iterator hide">
+            <h2 class="heading">Finishing up</h2>
+            <p class="message">
+              Double-check everything looks OK before confirming.
+            </p>
+
+            <!-- All codes in this block should be rendered dynamically using javascript -->
+            <div class="rendered__selectedEl__container">
+              <div class="selected__plan__summary">
+                <div class="selected__plan">
+                  <p class="summaryColor">Arcade (Monthly)</p>
+                  <p><a href="#">Change</a></p>
+                </div>
+                <p class="summaryColor">$9/mo</p>
+              </div>
+
+              <div class="add-ons__selected">
+                <div class="addon1">
+                  <p class="summaryColorGray">Online Service</p>
+                  <p class="summaryColor" style="font-weight: lighter">
+                    +$1/mo
+                  </p>
+                </div>
+
+                <div class="addon2">
+                  <p class="summaryColorGray">Larger Storage</p>
+                  <p class="summaryColor" style="font-weight: lighter">
+                    +$2/mo
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="totalSect">
+              <p class="summaryColorGray">Total (per month)</p>
+              <p class="summaryColor" style="font-size: 18px">+$12/mo</p>
+            </div>
+
+            <button>Confirm</button>
+            <a class="navigate__back" href="#">Go Back</a>
+          </div>
+          <!-- End of fourth and final section -->
+
+          <!-- Beginning of Thank you / Finished message -->
+          <div class="thankyou iterator hide">
+            <figcaption>
+              <img
+                src="./assets/images/icon-thank-you.svg"
+                alt="thank you image"
+              />
+            </figcaption>
+
+            <h2 class="heading">Thank you!</h2>
+            <p class="message">
+              Thanks for confirming your subscription! We hope you have fun
+              using our platform. If you ever need support, please feel free to
+              email us at support@loremgaming.com.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="attribution">
+        Challenge by
+        <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+          >Frontend Mentor</a
+        >. Coded by <a href="#" target="_blank">Abdullah Ayoola</a>.
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
