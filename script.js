@@ -130,8 +130,6 @@ function checkActivePlan() {
       planSummary[1].textContent = plans__pricing[i].textContent;
 
       // rendering the addon selected on the fourth step
-      // comeback later to render this, only if the checkbox was checked
-      // and also render an insertAdjacentHTML() for if the last element was selected
       planSummary[2].textContent = addon_P[0].textContent;
       planSummary[3].textContent = addon_P[1].textContent;
       // adding all of the sumamry balances together
@@ -234,6 +232,8 @@ function renderCheckedBoxes() {
   checkBoxes.forEach((checkBox, i) => {
     // console.log(checkBox.checked);
     if (checkBoxes[i].checked) {
+      // I still don't know why this isn't working
+      addons[i].classList.toggle(".checked");
       const html = `
                 <div class="addon${i + 1}">
                   <p class="summaryColorGray">${
@@ -245,7 +245,7 @@ function renderCheckedBoxes() {
                 </div>
     `;
 
-      container.insertAdjacentHTML("afterend", html);
+      container.insertAdjacentHTML("afterbegin", html);
     }
   });
 }
