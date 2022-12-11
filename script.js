@@ -6,6 +6,7 @@ const inputEmail = document.querySelector(".inputEmail");
 const inputNumber = document.querySelector(".inputNumber");
 const inputs = document.querySelectorAll(".input_box_section > input");
 const errorMessage = document.querySelectorAll(".errorMsg");
+
 const buttons = document.querySelectorAll("button");
 const plans = document.querySelectorAll(".plan");
 const plans__pricing = document.querySelectorAll(".plan__pricing");
@@ -13,21 +14,27 @@ const planName = document.querySelectorAll(".plan__name");
 const toggle = document.querySelector(".toggle__section > i");
 const addons = document.querySelectorAll(".add-on");
 const nextDOMElement = document.querySelectorAll(".iterator");
+
 const form = document.querySelector("form");
 const activePlan = document.querySelector(".plan__active");
 const activePlanColor = document.querySelectorAll(".toggle__section > p");
 const yearlyPricing = document.querySelectorAll(".yearly__pricing");
 const text = document.querySelectorAll(".unique");
 const navigateBack = document.querySelectorAll(".navigate__back");
+
 const selectedPlan = document.querySelector(".selected__plan :first-child");
 const selectedPlanSummary = document.querySelector(
   ".selected__plan__summary > p"
 );
 const planSummarySelected = document.querySelectorAll(".summaryColorGray");
 const planSummary = document.querySelectorAll(".summaryColor");
+
 const addOnToBeSelected = document.querySelectorAll(
   ".add-on_to_be_selected :first-child"
 );
+const addon_P = document.querySelectorAll(".add-on > p");
+const checkBoxes = document.querySelectorAll('input[type="checkbox"]');
+const container = document.querySelector(".add-ons__selected");
 
 form.addEventListener("click", (e) => {
   e.preventDefault();
@@ -47,6 +54,9 @@ buttons[0].addEventListener("click", () => {
 
   // move to next step
   moveToNextStep();
+
+  // call the checkActivePlan() so that selection would be made possible
+  checkActivePlan();
 });
 
 function checkActiveStep() {
@@ -114,15 +124,25 @@ function checkActivePlan() {
       removePreviousActivePlan();
       plan.classList.add("plan__detail__selected");
 
-      selectedPlan.textContent = `${planName[i].textContent} (Monthly)`;
-      // planSummary[i].textContent = plans__pricing[i].textContent;
+      // rendering the plan selected to the fourth step and the pricing inclusive
+      planSummary[0].textContent = `${planName[i].textContent} (Monthly)`;
 
-      // planSummarySelected[i].textContent = addOnToBeSelected[i];
+      planSummary[1].textContent = plans__pricing[i].textContent;
+
+      // rendering the addon selected on the fourth step
+      // comeback later to render this, only if the checkbox was checked
+      // and also render an insertAdjacentHTML() for if the last element was selected
+      planSummary[2].textContent = addon_P[0].textContent;
+      planSummary[3].textContent = addon_P[1].textContent;
+      // adding all of the sumamry balances together
+      planSummary[4].textContent = `+$${
+        returnPerfectNumber(planSummary[1].textContent) +
+        returnPerfectNumber(planSummary[2].textContent) +
+        returnPerfectNumber(planSummary[3].textContent)
+      }/mo`;
     });
   });
 }
-
-checkActivePlan();
 
 function removePreviousActivePlan() {
   plans.forEach((plan) => {
@@ -183,18 +203,57 @@ function moveBackwardOneStep() {
 
 buttons[2].addEventListener("click", () => {
   stepFurther();
+  // call the renderCheckedBoxes() function to check for the renderboxes and render them
+  renderCheckedBoxes();
 });
 
 navigateBack[1].addEventListener("click", () => {
   moveBackwardOneStep();
+  container.textContent = "";
 });
 
 // fourth section
 
 buttons[3].addEventListener("click", () => {
-  stepFurther();
+  // because we aren't navigating through any steps further, that's why I didn't call the stepfurther()
+  index++;
+
+  // the previous content of the DOM should be set to hide
+  nextDOMElement[index - 1].classList.add("hide");
+  console.log(index);
+  // the next content of the DOM should be shown or rendered
+  nextDOMElement[index].classList.remove("hide");
 });
 
 navigateBack[2].addEventListener("click", () => {
   moveBackwardOneStep();
 });
+
+function renderCheckedBoxes() {
+  container.innerHTML = "";
+  checkBoxes.forEach((checkBox, i) => {
+    // console.log(checkBox.checked);
+    if (checkBoxes[i].checked) {
+      const html = `
+                <div class="addon${i + 1}">
+                  <p class="summaryColorGray">${
+                    addOnToBeSelected[i].textContent
+                  }</p>
+                  <p class="summaryColor" style="font-weight: lighter">
+                    ${addon_P[i].textContent}
+                  </p>
+                </div>
+    `;
+
+      container.insertAdjacentHTML("afterend", html);
+    }
+  });
+}
+
+function returnPerfectNumber(value) {
+  const result = value
+    .replaceAll("$", "")
+    .replaceAll("/", "")
+    .replaceAll("mo", "");
+  return Number(result);
+}
