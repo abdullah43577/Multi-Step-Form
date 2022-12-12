@@ -9,7 +9,7 @@ const errorMessage = document.querySelectorAll(".errorMsg");
 
 const buttons = document.querySelectorAll("button");
 const plans = document.querySelectorAll(".plan");
-const plans__pricing = document.querySelectorAll(".plan__pricing");
+const monthlyPlan = document.querySelectorAll(".plan__pricing");
 const planName = document.querySelectorAll(".plan__name");
 const toggle = document.querySelector(".toggle__section > i");
 const addons = document.querySelectorAll(".add-on");
@@ -18,8 +18,8 @@ const nextDOMElement = document.querySelectorAll(".iterator");
 const form = document.querySelector("form");
 const activePlan = document.querySelector(".plan__active");
 const activePlanColor = document.querySelectorAll(".toggle__section > p");
-const yearlyPricing = document.querySelectorAll(".yearly__pricing");
-const text = document.querySelectorAll(".unique");
+const yearlyPricingPlan = document.querySelectorAll(".yearly__pricing");
+const yearlyPricing = document.querySelectorAll(".unique");
 const navigateBack = document.querySelectorAll(".navigate__back");
 
 const selectedPlan = document.querySelector(".selected__plan :first-child");
@@ -32,7 +32,7 @@ const planSummary = document.querySelectorAll(".summaryColor");
 const addOnToBeSelected = document.querySelectorAll(
   ".add-on_to_be_selected :first-child"
 );
-const addon_P = document.querySelectorAll(".add-on > p");
+const addonPricing = document.querySelectorAll(".add-on > p");
 const checkBoxes = document.querySelectorAll('input[type="checkbox"]');
 const container = document.querySelector(".add-ons__selected");
 
@@ -59,12 +59,6 @@ buttons[0].addEventListener("click", () => {
   checkActivePlan();
 });
 
-function checkActiveStep() {
-  if (stepsNavigator[index - 1].classList.contains("active__step")) {
-    stepsNavigator[index - 1].classList.remove("active__step");
-  }
-}
-
 // checks if all inputs were valid
 function conditionalsCheck() {
   // if the input contains letters from A-Z and not a single number
@@ -87,6 +81,33 @@ function conditionalsCheck() {
   }
 }
 
+function moveToNextStep() {
+  // if the inputs fulfills the conditionalsCheck()
+  if (((nameValue === phoneNumber) === email) === true) {
+    stepFurther();
+  }
+}
+
+function checkActivePlan() {
+  plans.forEach((plan, i) => {
+    plan.addEventListener("click", () => {
+      removePreviousActivePlan();
+      plan.classList.add("plan__detail__selected");
+
+      // rendering the plan selected to the fourth step and the pricing inclusive
+      planSummary[0].textContent = `${planName[i].textContent} (Monthly)`;
+
+      planSummary[1].textContent = monthlyPlan[i].textContent;
+    });
+  });
+}
+
+function checkActiveStep() {
+  if (stepsNavigator[index - 1].classList.contains("active__step")) {
+    stepsNavigator[index - 1].classList.remove("active__step");
+  }
+}
+
 // function for the error Messages being displayed
 function showErrorMessage(errorIndex, errorMsg, inputIndex) {
   errorMessage[errorIndex].textContent = errorMsg;
@@ -100,13 +121,6 @@ function showErrorMessage(errorIndex, errorMsg, inputIndex) {
   }, 3000);
 }
 
-function moveToNextStep() {
-  // if the inputs fulfills the conditionalsCheck()
-  if (((nameValue === phoneNumber) === email) === true) {
-    stepFurther();
-  }
-}
-
 // Second Rendered Element Section
 
 buttons[1].addEventListener("click", () => {
@@ -117,20 +131,6 @@ buttons[1].addEventListener("click", () => {
   // move to the next page
   stepFurther();
 });
-
-function checkActivePlan() {
-  plans.forEach((plan, i) => {
-    plan.addEventListener("click", () => {
-      removePreviousActivePlan();
-      plan.classList.add("plan__detail__selected");
-
-      // rendering the plan selected to the fourth step and the pricing inclusive
-      planSummary[0].textContent = `${planName[i].textContent} (Monthly)`;
-
-      planSummary[1].textContent = plans__pricing[i].textContent;
-    });
-  });
-}
 
 function removePreviousActivePlan() {
   plans.forEach((plan) => {
@@ -145,14 +145,19 @@ toggle.addEventListener("click", () => {
   activePlanColor[0].classList.toggle("plan__active");
   activePlanColor[1].classList.toggle("plan__active");
 
-  plans__pricing.forEach((price, i) => {
-    plans__pricing[i].classList.toggle("hide");
-    text[i].classList.toggle("hide");
-  });
-
-  yearlyPricing.forEach((price, i) => {
+  monthlyPlan.forEach((price, i) => {
+    price.classList.toggle("hide");
     yearlyPricing[i].classList.toggle("hide");
   });
+
+  yearlyPricingPlan.forEach((price, i) => {
+    price.classList.toggle("hide");
+  });
+
+  // const testArr = ["$90/yr", "$120/yr", "$150/yr"];
+  // monthlyPlan.forEach((price, i) => {
+  //   price.textContent = testArr[i];
+  // });
 });
 
 navigateBack[0].addEventListener("click", () => {
@@ -220,7 +225,6 @@ navigateBack[2].addEventListener("click", () => {
 function renderCheckedBoxes() {
   container.innerHTML = "";
   checkBoxes.forEach((checkBox, i) => {
-    planSummary[2].textContent = `+$${f}/mo`;
     if (checkBox.checked) {
       // I still don't know why this isn't working
       addons[i].classList.toggle(".checked");
@@ -230,17 +234,12 @@ function renderCheckedBoxes() {
                     addOnToBeSelected[i].textContent
                   }</p>
                   <p class="summaryAddon summaryColor" style="font-weight: lighter">
-                    ${addon_P[i].textContent}
+                    ${addonPricing[i].textContent}
                   </p>
                 </div>
     `;
 
       container.insertAdjacentHTML("afterbegin", html);
-      const summaryT = document.querySelectorAll(".summaryAddon");
-
-      // const testData = summaryT.reduce((acc, sumT) => {
-      //   acc + returnPerfectNumber(sumT.textContent), 0;
-      // });
     }
   });
 }
