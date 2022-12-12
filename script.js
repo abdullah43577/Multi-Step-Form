@@ -128,16 +128,6 @@ function checkActivePlan() {
       planSummary[0].textContent = `${planName[i].textContent} (Monthly)`;
 
       planSummary[1].textContent = plans__pricing[i].textContent;
-
-      // rendering the addon selected on the fourth step
-      planSummary[2].textContent = addon_P[0].textContent;
-      planSummary[3].textContent = addon_P[1].textContent;
-      // adding all of the sumamry balances together
-      planSummary[4].textContent = `+$${
-        returnPerfectNumber(planSummary[1].textContent) +
-        returnPerfectNumber(planSummary[2].textContent) +
-        returnPerfectNumber(planSummary[3].textContent)
-      }/mo`;
     });
   });
 }
@@ -230,8 +220,8 @@ navigateBack[2].addEventListener("click", () => {
 function renderCheckedBoxes() {
   container.innerHTML = "";
   checkBoxes.forEach((checkBox, i) => {
-    // console.log(checkBox.checked);
-    if (checkBoxes[i].checked) {
+    planSummary[2].textContent = `+$${f}/mo`;
+    if (checkBox.checked) {
       // I still don't know why this isn't working
       addons[i].classList.toggle(".checked");
       const html = `
@@ -239,21 +229,27 @@ function renderCheckedBoxes() {
                   <p class="summaryColorGray">${
                     addOnToBeSelected[i].textContent
                   }</p>
-                  <p class="summaryColor" style="font-weight: lighter">
+                  <p class="summaryAddon summaryColor" style="font-weight: lighter">
                     ${addon_P[i].textContent}
                   </p>
                 </div>
     `;
 
       container.insertAdjacentHTML("afterbegin", html);
+      const summaryT = document.querySelectorAll(".summaryAddon");
+
+      // const testData = summaryT.reduce((acc, sumT) => {
+      //   acc + returnPerfectNumber(sumT.textContent), 0;
+      // });
     }
   });
 }
 
-function returnPerfectNumber(value) {
+function returnPerfectNumber(value, plan) {
   const result = value
     .replaceAll("$", "")
     .replaceAll("/", "")
-    .replaceAll("mo", "");
+    .replaceAll(plan, "")
+    .replaceAll("+", "");
   return Number(result);
 }
