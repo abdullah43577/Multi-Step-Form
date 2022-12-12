@@ -183,8 +183,8 @@
             <p class="message">Add-ons help enhance your gaming experience.</p>
 
             <div class="add-ons__container">
-              <div class="add-on checked">
-                <input type="checkbox" checked />
+              <label for="online-service" class="add-on checked">
+                <input type="checkbox" id="online-service" checked />
 
                 <div class="add-on_to_be_selected">
                   <p>Online service</p>
@@ -192,10 +192,10 @@
                 </div>
 
                 <p>+$1/mo</p>
-              </div>
+              </label>
 
-              <div class="add-on checked">
-                <input type="checkbox" checked />
+              <label for="large-storage" class="add-on checked">
+                <input type="checkbox" id="large-storage" checked />
 
                 <div class="add-on_to_be_selected">
                   <p>Larger storage</p>
@@ -203,10 +203,10 @@
                 </div>
 
                 <p>+$2/mo</p>
-              </div>
+              </label>
 
-              <div class="add-on">
-                <input type="checkbox" />
+              <label for="profile" class="add-on">
+                <input id="profile" type="checkbox" />
 
                 <div class="add-on_to_be_selected">
                   <p>Customizable Profile</p>
@@ -214,7 +214,7 @@
                 </div>
 
                 <p>+$2/mo</p>
-              </div>
+              </label>
             </div>
 
             <button>Next Step</button>
@@ -258,7 +258,9 @@
 
             <div class="totalSect">
               <p class="summaryColorGray">Total (per month)</p>
-              <p class="summaryColor" style="font-size: 18px">+$12/mo</p>
+              <p class="summaryColor" style="font-size: 18px" id="totalSummary">
+                +$12/mo
+              </p>
             </div>
 
             <button>Confirm</button>

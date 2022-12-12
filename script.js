@@ -44,6 +44,9 @@ let nameValue = false;
 let email = false;
 let phoneNumber = false;
 
+// To keep track of monthly or yearly pricing
+let isMonthOrYear = "mo";
+
 // To keep track of the what rendered page we are on the iteration
 let index = 0;
 
@@ -57,6 +60,36 @@ buttons[0].addEventListener("click", () => {
 
   // call the checkActivePlan() so that selection would be made possible
   checkActivePlan();
+});
+
+// Second Rendered Element Section
+buttons[1].addEventListener("click", () => {
+  console.log("I'm being clicked");
+  // checks for the active plan and removes previous active plans where necessary
+  checkActivePlan();
+
+  // move to the next page
+  stepFurther();
+});
+
+// Third step section
+
+buttons[2].addEventListener("click", () => {
+  stepFurther();
+  // call the renderCheckedBoxes() function to check for the renderboxes and render them
+  renderCheckedBoxes();
+});
+
+// fourth section
+buttons[3].addEventListener("click", () => {
+  // because we aren't navigating through any steps further, that's why I didn't call the stepfurther()
+  index++;
+
+  // the previous content of the DOM should be set to hide
+  nextDOMElement[index - 1].classList.add("hide");
+  console.log(index);
+  // the next content of the DOM should be shown or rendered
+  nextDOMElement[index].classList.remove("hide");
 });
 
 function checkActiveStep() {
@@ -107,17 +140,6 @@ function moveToNextStep() {
   }
 }
 
-// Second Rendered Element Section
-
-buttons[1].addEventListener("click", () => {
-  console.log("I'm being clicked");
-  // checks for the active plan and removes previous active plans where necessary
-  checkActivePlan();
-
-  // move to the next page
-  stepFurther();
-});
-
 function checkActivePlan() {
   plans.forEach((plan, i) => {
     plan.addEventListener("click", () => {
@@ -125,9 +147,17 @@ function checkActivePlan() {
       plan.classList.add("plan__detail__selected");
 
       // rendering the plan selected to the fourth step and the pricing inclusive
-      planSummary[0].textContent = `${planName[i].textContent} (Monthly)`;
+      planSummary[0].textContent = `${planName[i].textContent} ${
+        isMonthOrYear === "mo" ? "(Monthly)" : "(Yearly)"
+      }`;
 
       planSummary[1].textContent = plans__pricing[i].textContent;
+
+      //  planSummary[2].textContent = `+$${
+      //    returnPerfectNumber(plans__pricing[i].textContent) +
+      //    returnPerfectNumber(addon_P[0].textContent) +
+      //    returnPerfectNumber(addon_P[1].textContent)
+      //  }/mo`;
     });
   });
 }
@@ -141,6 +171,12 @@ function removePreviousActivePlan() {
 }
 
 toggle.addEventListener("click", () => {
+  if (isMonthOrYear === "mo") {
+    isMonthOrYear = "yr";
+  } else {
+    isMonthOrYear = "mo";
+  }
+
   toggle.classList.toggle("fa-toggle-on");
   activePlanColor[0].classList.toggle("plan__active");
   activePlanColor[1].classList.toggle("plan__active");
@@ -187,30 +223,9 @@ function moveBackwardOneStep() {
   nextDOMElement[index + 1].classList.add("hide");
 }
 
-// Third step section
-
-buttons[2].addEventListener("click", () => {
-  stepFurther();
-  // call the renderCheckedBoxes() function to check for the renderboxes and render them
-  renderCheckedBoxes();
-});
-
 navigateBack[1].addEventListener("click", () => {
   moveBackwardOneStep();
   container.textContent = "";
-});
-
-// fourth section
-
-buttons[3].addEventListener("click", () => {
-  // because we aren't navigating through any steps further, that's why I didn't call the stepfurther()
-  index++;
-
-  // the previous content of the DOM should be set to hide
-  nextDOMElement[index - 1].classList.add("hide");
-  console.log(index);
-  // the next content of the DOM should be shown or rendered
-  nextDOMElement[index].classList.remove("hide");
 });
 
 navigateBack[2].addEventListener("click", () => {
@@ -218,9 +233,11 @@ navigateBack[2].addEventListener("click", () => {
 });
 
 function renderCheckedBoxes() {
+  console.log("rendering checked boxes");
+  let sumAddon = 0;
   container.innerHTML = "";
   checkBoxes.forEach((checkBox, i) => {
-    planSummary[2].textContent = `+$${f}/mo`;
+    planSummary[2].textContent = `+$${i}/${isMonthOrYear}}`;
     if (checkBox.checked) {
       // I still don't know why this isn't working
       addons[i].classList.toggle(".checked");
@@ -236,13 +253,28 @@ function renderCheckedBoxes() {
     `;
 
       container.insertAdjacentHTML("afterbegin", html);
-      const summaryT = document.querySelectorAll(".summaryAddon");
+      // const summaryT = document.querySelectorAll(".summaryAddon");
+
+      sumAddon += returnPerfectNumber(addon_P[i].textContent, isMonthOrYear);
 
       // const testData = summaryT.reduce((acc, sumT) => {
       //   acc + returnPerfectNumber(sumT.textContent), 0;
       // });
     }
   });
+
+  console.log(
+    sumAddon,
+    "sumAddon",
+    planSummary[0].textContent,
+    returnPerfectNumber(planSummary[1].textContent, isMonthOrYear)
+  );
+
+  const totalSummary = document.getElementById("totalSummary");
+  // console.log(totalSummary);
+  totalSummary.textContent = `+$${
+    sumAddon + returnPerfectNumber(planSummary[1].textContent, "mo")
+  }/mo`;
 }
 
 function returnPerfectNumber(value, plan) {
