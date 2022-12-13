@@ -364,6 +364,7 @@ button:hover {
 .addonMonthlyPricing,
 .addonYearlyPricing {
   color: hsl(243, 100%, 62%);
+  font-size: 14px;
 }
 
 /* Beginning of the Thank-you message section */

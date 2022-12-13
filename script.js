@@ -158,7 +158,7 @@ toggle.addEventListener("click", () => {
     })`;
   });
 
-  yearlyPricingPlan.forEach((price, i) => {
+  yearlyPricingPlan.forEach((price) => {
     price.classList.toggle("hide");
   });
 });
@@ -257,9 +257,9 @@ function renderSelectedPlan() {
       selected__plan__summary.innerHTML = "";
       selected__plan__summary.innerHTML = `
                   <div class="selected__plan">
-                    <p class="summaryColor">${planName[i].textContent}(${
+                    <p class="summaryColor">${planName[i].textContent} (${
         yearlyToggle.classList.contains("plan__active") ? "Yearly" : "Monthly"
-      } )</p>
+      })</p>
                       <p><a href="#">Change</a></p>
                 </div>
                 <p class="summaryColor">${monthlyPlan[i].textContent}</p>
