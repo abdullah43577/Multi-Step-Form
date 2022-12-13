@@ -26,15 +26,21 @@ const selectedPlan = document.querySelector(".selected__plan :first-child");
 const selectedPlanSummary = document.querySelector(
   ".selected__plan__summary > p"
 );
-const planSummarySelected = document.querySelectorAll(".summaryColorGray");
+// this was in All before
+const planSummarySelected = document.querySelector(".summaryColorGray");
 const planSummary = document.querySelectorAll(".summaryColor");
-
 const addOnToBeSelected = document.querySelectorAll(
   ".add-on_to_be_selected :first-child"
 );
-const addonPricing = document.querySelectorAll(".add-on > p");
+
+const addonMonthlyPricing = document.querySelectorAll(".addonMonthlyPricing");
 const checkBoxes = document.querySelectorAll('input[type="checkbox"]');
 const container = document.querySelector(".add-ons__selected");
+const addonYearlyPricing = document.querySelectorAll(".addonYearlyPricing");
+const yearlyToggle = document.querySelector(".toggle__section :last-child");
+const selected__plan__summary = document.querySelector(
+  ".selected__plan__summary"
+);
 
 form.addEventListener("click", (e) => {
   e.preventDefault();
@@ -93,11 +99,6 @@ function checkActivePlan() {
     plan.addEventListener("click", () => {
       removePreviousActivePlan();
       plan.classList.add("plan__detail__selected");
-
-      // rendering the plan selected to the fourth step and the pricing inclusive
-      planSummary[0].textContent = `${planName[i].textContent} (Monthly)`;
-
-      planSummary[1].textContent = monthlyPlan[i].textContent;
     });
   });
 }
@@ -124,7 +125,6 @@ function showErrorMessage(errorIndex, errorMsg, inputIndex) {
 // Second Rendered Element Section
 
 buttons[1].addEventListener("click", () => {
-  console.log("I'm being clicked");
   // checks for the active plan and removes previous active plans where necessary
   checkActivePlan();
 
@@ -148,16 +148,19 @@ toggle.addEventListener("click", () => {
   monthlyPlan.forEach((price, i) => {
     price.classList.toggle("hide");
     yearlyPricing[i].classList.toggle("hide");
+
+    // for the addonYealyPricing
+    addonYearlyPricing[i].classList.toggle("hide");
+    addonMonthlyPricing[i].classList.toggle("hide");
+
+    planSummarySelected.textContent = `Total (per ${
+      yearlyToggle.classList.contains("plan__active") ? "Year" : "Month"
+    })`;
   });
 
   yearlyPricingPlan.forEach((price, i) => {
     price.classList.toggle("hide");
   });
-
-  // const testArr = ["$90/yr", "$120/yr", "$150/yr"];
-  // monthlyPlan.forEach((price, i) => {
-  //   price.textContent = testArr[i];
-  // });
 });
 
 navigateBack[0].addEventListener("click", () => {
@@ -198,6 +201,9 @@ buttons[2].addEventListener("click", () => {
   stepFurther();
   // call the renderCheckedBoxes() function to check for the renderboxes and render them
   renderCheckedBoxes();
+
+  // the plan summary section 4
+  renderSelectedPlan();
 });
 
 navigateBack[1].addEventListener("click", () => {
@@ -234,13 +240,31 @@ function renderCheckedBoxes() {
                     addOnToBeSelected[i].textContent
                   }</p>
                   <p class="summaryAddon summaryColor" style="font-weight: lighter">
-                    ${addonPricing[i].textContent}
+                    ${addonMonthlyPricing[i].textContent}
                   </p>
                 </div>
     `;
 
       container.insertAdjacentHTML("afterbegin", html);
     }
+  });
+}
+
+function renderSelectedPlan() {
+  plans.forEach((plan, i) => {
+    plan.addEventListener("click", () => {
+      // emptying the innerHTML before rendering a new content to the DOM
+      selected__plan__summary.innerHTML = "";
+      selected__plan__summary.innerHTML = `
+                  <div class="selected__plan">
+                    <p class="summaryColor">${planName[i].textContent}(${
+        yearlyToggle.classList.contains("plan__active") ? "Yearly" : "Monthly"
+      } )</p>
+                      <p><a href="#">Change</a></p>
+                </div>
+                <p class="summaryColor">${monthlyPlan[i].textContent}</p>
+                          `;
+    });
   });
 }
 

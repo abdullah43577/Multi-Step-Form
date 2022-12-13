@@ -361,6 +361,11 @@ button:hover {
   padding: 10px 0;
 }
 
+.addonMonthlyPricing,
+.addonYearlyPricing {
+  color: hsl(243, 100%, 62%);
+}
+
 /* Beginning of the Thank-you message section */
 .thankyou {
   display: flex;
