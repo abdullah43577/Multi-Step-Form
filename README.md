@@ -35,7 +35,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Solution URL here](https://your-solution-url.com)
+- Solution URL: [Solution URL here](https://www.frontendmentor.io/solutions/multistep-form-UDcIzGwW-j)
 - Live Site URL: [Live site URL here](https://multi-step-webp.netlify.app/)
 
 ## My process
@@ -51,25 +51,21 @@ Users should be able to:
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+Logic is everything in programming, If I was more logical while building this project, the code wouldn't have been as complicated as it is. I learnt a lot of things while building this, and I'll take it into consideration whenever I'm building my future projects.
 
-To see how you can add code snippets, see below:
-
-```html
-<h1>Some HTML code I'm proud of</h1>
 ```
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
+I'll continue developing myself on the logical aspects of building projects
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
+- [Resource 1](https://fontawesome.com/) - This helped me for implementing the toggle section of the code.
 
 ## Author
 
 - Website - [Abdullah Ayoola](https://github.com/abdullah43577)
 - Frontend Mentor - [@abdullah43577](https://www.frontendmentor.io/profile/abdullah43577)
 - Twitter - [@officialayo540](https://twitter.com/officialayo540)
+```
