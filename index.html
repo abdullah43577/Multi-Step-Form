@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
     <link
       rel="icon"
       type="image/png"
@@ -91,6 +94,7 @@
                   type="email"
                   placeholder="e.g. stephenking@lorem.com"
                   class="inputEmail"
+                  required
                 />
               </div>
 
@@ -107,7 +111,9 @@
                 />
               </div>
 
-              <button>Next Step</button>
+              <div class="button__sect">
+                <button class="selfAbsolute">Next Step</button>
+              </div>
             </form>
           </div>
           <!-- End of the first step -->
@@ -172,8 +178,10 @@
               <p>Yearly</p>
             </div>
 
-            <button>Next Step</button>
-            <a class="navigate__back" href="#">Go Back</a>
+            <div class="button__sect">
+              <a class="navigate__back" href="#">Go Back</a>
+              <button>Next Step</button>
+            </div>
           </div>
           <!-- End of second step -->
 
@@ -220,8 +228,10 @@
               </div>
             </div>
 
-            <button>Next Step</button>
-            <a class="navigate__back" href="#">Go Back</a>
+            <div class="button__sect">
+              <a class="navigate__back" href="#">Go Back</a>
+              <button>Next Step</button>
+            </div>
           </div>
           <!-- End of third step -->
 
@@ -250,8 +260,10 @@
               <p class="summaryColor" style="font-size: 18px">+$12/mo</p>
             </div>
 
-            <button>Confirm</button>
-            <a class="navigate__back" href="#">Go Back</a>
+            <div class="button__sect">
+              <a class="navigate__back" href="#">Go Back</a>
+              <button>Confirm</button>
+            </div>
           </div>
           <!-- End of fourth and final section -->
 

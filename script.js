@@ -41,6 +41,7 @@ const yearlyToggle = document.querySelector(".toggle__section :last-child");
 const selected__plan__summary = document.querySelector(
   ".selected__plan__summary"
 );
+const renderedSummaryColor = document.querySelectorAll(".summaryColorT");
 
 form.addEventListener("click", (e) => {
   e.preventDefault();
@@ -89,7 +90,7 @@ function conditionalsCheck() {
 
 function moveToNextStep() {
   // if the inputs fulfills the conditionalsCheck()
-  if (((nameValue === phoneNumber) === email) === true) {
+  if (nameValue === true && phoneNumber === true && email === true) {
     stepFurther();
   }
 }
@@ -204,6 +205,10 @@ buttons[2].addEventListener("click", () => {
 
   // the plan summary section 4
   renderSelectedPlan();
+  // checking if the year plan was toggled
+  isYear();
+
+  // renderIsYearEl();
 });
 
 navigateBack[1].addEventListener("click", () => {
@@ -228,6 +233,8 @@ navigateBack[2].addEventListener("click", () => {
   moveBackwardOneStep();
 });
 
+const arr = [];
+
 function renderCheckedBoxes() {
   container.innerHTML = "";
   checkBoxes.forEach((checkBox, i) => {
@@ -240,7 +247,11 @@ function renderCheckedBoxes() {
                     addOnToBeSelected[i].textContent
                   }</p>
                   <p class="summaryAddon summaryColor" style="font-weight: lighter">
-                    ${addonMonthlyPricing[i].textContent}
+                    ${
+                      yearlyToggle.classList.contains("plan__active")
+                        ? addonYearlyPricing[i].textContent
+                        : addonMonthlyPricing[i].textContent
+                    }
                   </p>
                 </div>
     `;
@@ -257,14 +268,46 @@ function renderSelectedPlan() {
       selected__plan__summary.innerHTML = "";
       selected__plan__summary.innerHTML = `
                   <div class="selected__plan">
-                    <p class="summaryColor">${planName[i].textContent} (${
+                    <p class="summaryColorT">${planName[i].textContent} (${
+        yearlyToggle.classList.contains("plan__active") ? "Yearly" : "Monthly"
+      })</p>
+                    <p><a href="#">Change</a></p>
+                </div>
+                <p class="summaryColorT summaryColor">${
+                  yearlyToggle.classList.contains("plan__active")
+                    ? yearlyPricing[i].textContent
+                    : monthlyPlan[i].textContent
+                }</p>
+                          `;
+    });
+  });
+}
+
+let itsYear = false;
+
+function isYear() {
+  plans.forEach((plan, i) => {
+    if (
+      plan.classList.contains("plan__detail__selected") &&
+      activePlanColor[1].classList.contains("plan__active")
+    ) {
+      // emptying the innerHTML before rendering a new content to the DOM
+      selected__plan__summary.innerHTML = "";
+      selected__plan__summary.innerHTML = `
+                  <div class="selected__plan">
+                    <p class="summaryColorT">${planName[i].textContent} (${
         yearlyToggle.classList.contains("plan__active") ? "Yearly" : "Monthly"
       })</p>
                       <p><a href="#">Change</a></p>
                 </div>
-                <p class="summaryColor">${monthlyPlan[i].textContent}</p>
+                <p class="summaryColorT summaryColor">${
+                  yearlyToggle.classList.contains("plan__active")
+                    ? yearlyPricing[i].textContent
+                    : monthlyPlan[i].textContent
+                }</p>
                           `;
-    });
+      itsYear = true;
+    }
   });
 }
 
@@ -276,3 +319,21 @@ function returnPerfectNumber(value, plan) {
     .replaceAll("+", "");
   return Number(result);
 }
+
+// console.log(returnPerfectNumber());
+
+// I'll look at this later
+
+// function selectedPlanCaller() {
+//     // emptying the innerHTML before rendering a new content to the DOM
+//     selected__plan__summary.innerHTML = "";
+//     selected__plan__summary.innerHTML = `
+//                   <div class="selected__plan">
+//                     <p class="summaryColor">${planName[i].textContent} (${
+//       yearlyToggle.classList.contains("plan__active") ? "Yearly" : "Monthly"
+//     })</p>
+//                       <p><a href="#">Change</a></p>
+//                 </div>
+//                 <p class="summaryColor">${monthlyPlan[i].textContent}</p>
+//                           `;
+// }
