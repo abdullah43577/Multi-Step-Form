@@ -506,7 +506,7 @@ footer {
   }
 }
 
-@media (max-width: 414px) and (max-height: 915px) {
+@media (max-width: 480px) {
   body {
     min-height: 120vh;
   }
@@ -519,15 +519,13 @@ footer {
   }
 
   .encapsulator {
-    top: 230px;
+    top: 120px;
     background-color: #f3f3f3;
     margin-top: 0;
     width: 340px;
     height: auto;
     padding: 40px 20px;
     position: absolute;
-    /* position: unset; */
-    /* transform: translate(0px, -70px); */
   }
 
   .button__sect {
@@ -541,7 +539,7 @@ footer {
   }
 
   .navigation__main__content {
-    height: auto;
+    height: 100%;
   }
 
   .plan > figcaption {
@@ -559,6 +557,12 @@ footer {
 
   footer {
     display: none;
+  }
+}
+
+@media (max-width: 414px) and (max-height: 915px) {
+  .encapsulator {
+    top: 230px;
   }
 }
 
