@@ -41,7 +41,8 @@ const yearlyToggle = document.querySelector(".toggle__section :last-child");
 const selected__plan__summary = document.querySelector(
   ".selected__plan__summary"
 );
-const renderedSummaryColor = document.querySelectorAll(".summaryColorT");
+// const renderedSummaryColor = document.querySelectorAll(".summaryColorT");
+let renderedSummaryColor;
 
 form.addEventListener("click", (e) => {
   e.preventDefault();
@@ -131,6 +132,9 @@ buttons[1].addEventListener("click", () => {
 
   // move to the next page
   stepFurther();
+
+  // the plan summary section 4
+  renderSelectedPlan();
 });
 
 function removePreviousActivePlan() {
@@ -197,18 +201,20 @@ function moveBackwardOneStep() {
 }
 
 // Third step section
+let sum = [];
+let uniqueArr = [];
 
 buttons[2].addEventListener("click", () => {
   stepFurther();
-  // call the renderCheckedBoxes() function to check for the renderboxes and render them
-  renderCheckedBoxes();
 
-  // the plan summary section 4
-  renderSelectedPlan();
+  renderCheckedBoxes();
+  renderedSummaryColor = document.querySelectorAll(".summaryColorT");
+
   // checking if the year plan was toggled
   isYear();
 
   // renderIsYearEl();
+  run();
 });
 
 navigateBack[1].addEventListener("click", () => {
@@ -224,7 +230,7 @@ buttons[3].addEventListener("click", () => {
 
   // the previous content of the DOM should be set to hide
   nextDOMElement[index - 1].classList.add("hide");
-  console.log(index);
+
   // the next content of the DOM should be shown or rendered
   nextDOMElement[index].classList.remove("hide");
 });
@@ -232,34 +238,6 @@ buttons[3].addEventListener("click", () => {
 navigateBack[2].addEventListener("click", () => {
   moveBackwardOneStep();
 });
-
-const arr = [];
-
-function renderCheckedBoxes() {
-  container.innerHTML = "";
-  checkBoxes.forEach((checkBox, i) => {
-    if (checkBox.checked) {
-      // I still don't know why this isn't working
-      addons[i].classList.toggle(".checked");
-      const html = `
-                <div class="addon${i + 1}">
-                  <p class="summaryColorGray">${
-                    addOnToBeSelected[i].textContent
-                  }</p>
-                  <p class="summaryAddon summaryColor" style="font-weight: lighter">
-                    ${
-                      yearlyToggle.classList.contains("plan__active")
-                        ? addonYearlyPricing[i].textContent
-                        : addonMonthlyPricing[i].textContent
-                    }
-                  </p>
-                </div>
-    `;
-
-      container.insertAdjacentHTML("afterbegin", html);
-    }
-  });
-}
 
 function renderSelectedPlan() {
   plans.forEach((plan, i) => {
@@ -273,7 +251,7 @@ function renderSelectedPlan() {
       })</p>
                     <p><a href="#">Change</a></p>
                 </div>
-                <p class="summaryColorT summaryColor">${
+                <p class="summaryColorT">${
                   yearlyToggle.classList.contains("plan__active")
                     ? yearlyPricing[i].textContent
                     : monthlyPlan[i].textContent
@@ -300,7 +278,7 @@ function isYear() {
       })</p>
                       <p><a href="#">Change</a></p>
                 </div>
-                <p class="summaryColorT summaryColor">${
+                <p class="summaryColorT">${
                   yearlyToggle.classList.contains("plan__active")
                     ? yearlyPricing[i].textContent
                     : monthlyPlan[i].textContent
@@ -311,29 +289,54 @@ function isYear() {
   });
 }
 
-function returnPerfectNumber(value, plan) {
+function renderCheckedBoxes() {
+  container.innerHTML = "";
+  checkBoxes.forEach((checkBox, i) => {
+    if (checkBox.checked) {
+      // I still don't know why this isn't working
+      addons[i].classList.toggle(".checked");
+      const html = `
+                <div class="addon${i + 1}">
+                  <p class="summaryColorGray">${
+                    addOnToBeSelected[i].textContent
+                  }</p>
+                  <p class="summaryAddon summaryColorT" style="font-weight: lighter">
+                    ${
+                      yearlyToggle.classList.contains("plan__active")
+                        ? addonYearlyPricing[i].textContent
+                        : addonMonthlyPricing[i].textContent
+                    }
+                  </p>
+                </div>
+    `;
+
+      container.insertAdjacentHTML("afterbegin", html);
+    }
+  });
+}
+
+// final page rendering
+function run() {
+  renderedSummaryColor.forEach((plan) => {
+    sum.push(returnPerfectNumber(plan.textContent));
+  });
+
+  uniqueArr = sum.filter((Num) => Num > 0);
+
+  let result = uniqueArr.reduce((acc, cur) => acc + cur, 0);
+
+  planSummary[1].textContent = `+$${result}/${
+    yearlyToggle.classList.contains("plan__active") ? "yr" : "mo"
+  }`;
+  sum = [];
+}
+
+function returnPerfectNumber(value) {
   const result = value
     .replaceAll("$", "")
     .replaceAll("/", "")
-    .replaceAll(plan, "")
+    .replaceAll("mo", "")
+    .replaceAll("yr", "")
     .replaceAll("+", "");
   return Number(result);
 }
-
-// console.log(returnPerfectNumber());
-
-// I'll look at this later
-
-// function selectedPlanCaller() {
-//     // emptying the innerHTML before rendering a new content to the DOM
-//     selected__plan__summary.innerHTML = "";
-//     selected__plan__summary.innerHTML = `
-//                   <div class="selected__plan">
-//                     <p class="summaryColor">${planName[i].textContent} (${
-//       yearlyToggle.classList.contains("plan__active") ? "Yearly" : "Monthly"
-//     })</p>
-//                       <p><a href="#">Change</a></p>
-//                 </div>
-//                 <p class="summaryColor">${monthlyPlan[i].textContent}</p>
-//                           `;
-// }
