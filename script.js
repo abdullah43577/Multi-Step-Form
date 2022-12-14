@@ -293,8 +293,6 @@ function renderCheckedBoxes() {
   container.innerHTML = "";
   checkBoxes.forEach((checkBox, i) => {
     if (checkBox.checked) {
-      // I still don't know why this isn't working
-      addons[i].classList.toggle(".checked");
       const html = `
                 <div class="addon${i + 1}">
                   <p class="summaryColorGray">${
@@ -315,7 +313,19 @@ function renderCheckedBoxes() {
   });
 }
 
-// final page rendering
+// adding the class for the checkActiveBox
+checkBoxes.forEach((checkBox, i) => {
+  checkBox.addEventListener("click", () => {
+    if (checkBox.checked) {
+      console.log("I'm checked");
+      addons[i].classList.toggle("checked");
+    } else {
+      addons[i].classList.toggle("checked");
+    }
+  });
+});
+
+// final page addition
 function run() {
   renderedSummaryColor.forEach((plan) => {
     sum.push(returnPerfectNumber(plan.textContent));
