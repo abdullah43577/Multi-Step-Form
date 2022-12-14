@@ -51,13 +51,18 @@ Users should be able to:
 
 ### What I learned
 
+```
 Logic is everything in programming, If I was more logical while building this project, the code wouldn't have been as complicated as it is. I learnt a lot of things while building this, and I'll take it into consideration whenever I'm building my future projects.
 
 ```
 
 ### Continued development
 
+```
+
 I'll continue developing myself on the logical aspects of building projects
+
+```
 
 ### Useful resources
 
@@ -68,4 +73,3 @@ I'll continue developing myself on the logical aspects of building projects
 - Website - [Abdullah Ayoola](https://github.com/abdullah43577)
 - Frontend Mentor - [@abdullah43577](https://www.frontendmentor.io/profile/abdullah43577)
 - Twitter - [@officialayo540](https://twitter.com/officialayo540)
-```
