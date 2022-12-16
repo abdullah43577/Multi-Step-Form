@@ -41,7 +41,24 @@ const yearlyToggle = document.querySelector(".toggle__section :last-child");
 const selected__plan__summary = document.querySelector(
   ".selected__plan__summary"
 );
-// const renderedSummaryColor = document.querySelectorAll(".summaryColorT");
+
+/* 
+- What is the variable renderedSummaryColor - renderedSummaryColor is the variable declared but not yet assigned used to get the nodelist of the plans and addons rendered on the last page of the form
+
+// FORM
+- I listened for click event on the button nested in the form.
+- when clicked it doesn't reload the webpage
+
+// nameValue, email, phonumber
+- These are variables to keep track of the validity of the input entered. 
+- By default, they're set to false
+
+// INDEX
+- used to keep track of the current position we are at each iteration
+- It's default and initial value is 0;
+
+*/
+
 let renderedSummaryColor;
 
 form.addEventListener("click", (e) => {
@@ -52,22 +69,34 @@ let nameValue = false;
 let email = false;
 let phoneNumber = false;
 
-// To keep track of the what rendered page we are on the iteration
 let index = 0;
 
-// first button
+/* 
+// BUTTONS
+- The buttons element is a nodelist of all the buttons rendered on each page of the iteration.
+- since each button is rendered accordingly, selecting them based on their index is a good approach to this.
+
+// BUTTON[0] - FIRST BTN
+- listening for click events
+- onclick invokes this three functions:
+
+** conditionalsCheck() - this returns true to the (nameValue, email, phoneNumber variables) if all the conditions were met and if not it invokes the showErrorMessage() function 
+
+** moveToNextStep() - this checks if all the variables are true, if so it calls the stepFurther() function.
+
+** checkActivePlan() 
+
+** the stepFurther() function increments index each time it's called and updates the necessary elements to render the next element in the iteration
+
+** the moveBackwardOneStep() function does the inverse of the stepFurther() function
+*/
+
 buttons[0].addEventListener("click", () => {
-  // check if valid inputs were entered
   conditionalsCheck();
-
-  // move to next step
   moveToNextStep();
-
-  // call the checkActivePlan() so that selection would be made possible
   checkActivePlan();
 });
 
-// checks if all inputs were valid
 function conditionalsCheck() {
   // if the input contains letters from A-Z and not a single number
   if (inputName.value.match(/[a-zA-Z]/g) && !inputName.value.match(/\d/g)) {
@@ -89,29 +118,7 @@ function conditionalsCheck() {
   }
 }
 
-function moveToNextStep() {
-  // if the inputs fulfills the conditionalsCheck()
-  if (nameValue === true && phoneNumber === true && email === true) {
-    stepFurther();
-  }
-}
-
-function checkActivePlan() {
-  plans.forEach((plan, i) => {
-    plan.addEventListener("click", () => {
-      removePreviousActivePlan();
-      plan.classList.add("plan__detail__selected");
-    });
-  });
-}
-
-function checkActiveStep() {
-  if (stepsNavigator[index - 1].classList.contains("active__step")) {
-    stepsNavigator[index - 1].classList.remove("active__step");
-  }
-}
-
-// function for the error Messages being displayed
+// this accepts the errormessage index to be displayed, the errormessage, and the inputindex. Most likely the inputindex = errorindex
 function showErrorMessage(errorIndex, errorMsg, inputIndex) {
   errorMessage[errorIndex].textContent = errorMsg;
   errorMessage[errorIndex].style.color = "red";
@@ -124,18 +131,26 @@ function showErrorMessage(errorIndex, errorMsg, inputIndex) {
   }, 3000);
 }
 
-// Second Rendered Element Section
+function moveToNextStep() {
+  // if the inputs fulfills the conditionalsCheck()
+  if (nameValue === true && phoneNumber === true && email === true) {
+    stepFurther();
+  }
+}
 
-buttons[1].addEventListener("click", () => {
-  // checks for the active plan and removes previous active plans where necessary
-  checkActivePlan();
-
-  // move to the next page
-  stepFurther();
-
-  // the plan summary section 4
-  renderSelectedPlan();
+// takes the user back one step the iteration flow
+navigateBack[0].addEventListener("click", () => {
+  moveBackwardOneStep();
 });
+
+function checkActivePlan() {
+  plans.forEach((plan, i) => {
+    plan.addEventListener("click", () => {
+      removePreviousActivePlan();
+      plan.classList.add("plan__detail__selected");
+    });
+  });
+}
 
 function removePreviousActivePlan() {
   plans.forEach((plan) => {
@@ -145,41 +160,12 @@ function removePreviousActivePlan() {
   });
 }
 
-toggle.addEventListener("click", () => {
-  toggle.classList.toggle("fa-toggle-on");
-  activePlanColor[0].classList.toggle("plan__active");
-  activePlanColor[1].classList.toggle("plan__active");
-
-  monthlyPlan.forEach((price, i) => {
-    price.classList.toggle("hide");
-    yearlyPricing[i].classList.toggle("hide");
-
-    // for the addonYealyPricing
-    addonYearlyPricing[i].classList.toggle("hide");
-    addonMonthlyPricing[i].classList.toggle("hide");
-
-    planSummarySelected.textContent = `Total (per ${
-      yearlyToggle.classList.contains("plan__active") ? "Year" : "Month"
-    })`;
-  });
-
-  yearlyPricingPlan.forEach((price) => {
-    price.classList.toggle("hide");
-  });
-});
-
-navigateBack[0].addEventListener("click", () => {
-  moveBackwardOneStep();
-});
-
 function stepFurther() {
   index++;
   stepsNavigator[index].classList.add("active__step");
 
-  // the previous content of the DOM should be set to hide
   nextDOMElement[index - 1].classList.add("hide");
-  console.log(index);
-  // the next content of the DOM should be shown or rendered
+
   nextDOMElement[index].classList.remove("hide");
 
   // check for active step
@@ -188,55 +174,39 @@ function stepFurther() {
 
 function moveBackwardOneStep() {
   index--;
-  console.log(index);
 
   stepsNavigator[index].classList.add("active__step");
 
   stepsNavigator[index + 1].classList.remove("active__step");
 
-  // the next content of the DOM should be hidden and previous shown
   nextDOMElement[index].classList.remove("hide");
 
   nextDOMElement[index + 1].classList.add("hide");
 }
 
-// Third step section
-let sum = [];
-let uniqueArr = [];
+function checkActiveStep() {
+  if (stepsNavigator[index - 1].classList.contains("active__step")) {
+    stepsNavigator[index - 1].classList.remove("active__step");
+  }
+}
 
-buttons[2].addEventListener("click", () => {
+/* 
+  // BUTTON[1] - SECOND BTN
+  - litsen for click events
+  - check for active plan and remove active plan where necessary
+  - invoke the stepFurther() function to move to the next step
+
+  - call the renderSelectedPlan() to render the textContent of the planName and the pricing to the last page (summary) each time the button is clicked
+*/
+
+// Second Rendered Element Section
+
+buttons[1].addEventListener("click", () => {
+  checkActivePlan();
   stepFurther();
 
-  renderCheckedBoxes();
-  renderedSummaryColor = document.querySelectorAll(".summaryColorT");
-
-  // checking if the year plan was toggled
-  isYear();
-
-  // renderIsYearEl();
-  run();
-});
-
-navigateBack[1].addEventListener("click", () => {
-  moveBackwardOneStep();
-  container.textContent = "";
-});
-
-// fourth section
-
-buttons[3].addEventListener("click", () => {
-  // because we aren't navigating through any steps further, that's why I didn't call the stepfurther()
-  index++;
-
-  // the previous content of the DOM should be set to hide
-  nextDOMElement[index - 1].classList.add("hide");
-
-  // the next content of the DOM should be shown or rendered
-  nextDOMElement[index].classList.remove("hide");
-});
-
-navigateBack[2].addEventListener("click", () => {
-  moveBackwardOneStep();
+  // rendering the plan selected name and pricing to the equivalent textContent on the summary page
+  renderSelectedPlan();
 });
 
 function renderSelectedPlan() {
@@ -261,7 +231,58 @@ function renderSelectedPlan() {
   });
 }
 
-let itsYear = false;
+// toggle between monthly and yearly plans
+toggle.addEventListener("click", () => {
+  toggle.classList.toggle("fa-toggle-on");
+  activePlanColor[0].classList.toggle("plan__active");
+  activePlanColor[1].classList.toggle("plan__active");
+
+  monthlyPlan.forEach((price, i) => {
+    price.classList.toggle("hide");
+    yearlyPricing[i].classList.toggle("hide");
+
+    // for the addonYealyPricing
+    addonYearlyPricing[i].classList.toggle("hide");
+    addonMonthlyPricing[i].classList.toggle("hide");
+
+    planSummarySelected.textContent = `Total (per ${
+      yearlyToggle.classList.contains("plan__active") ? "Year" : "Month"
+    })`;
+  });
+
+  yearlyPricingPlan.forEach((price) => {
+    price.classList.toggle("hide");
+  });
+});
+
+// Third step section
+let sum = [];
+let uniqueArr = [];
+
+/* 
+- BUTTON[2] - THIRD BTN
+- listen for clicks
+- calls the stepFurther(), renderedCheckedBoxes(), isYear(), and run() function
+- assigned the renderedSummaryColor to the nodelist of class name given to all the rendered plan or addons pricing on the summary page 
+
+*/
+
+buttons[2].addEventListener("click", () => {
+  stepFurther();
+
+  renderCheckedBoxes();
+  renderedSummaryColor = document.querySelectorAll(".summaryColorT");
+
+  // checking if the year plan was toggled
+  isYear();
+  run();
+});
+
+// move one step back in the iteration flow
+navigateBack[1].addEventListener("click", () => {
+  moveBackwardOneStep();
+  container.textContent = "";
+});
 
 function isYear() {
   plans.forEach((plan, i) => {
@@ -284,7 +305,6 @@ function isYear() {
                     : monthlyPlan[i].textContent
                 }</p>
                           `;
-      itsYear = true;
     }
   });
 }
@@ -313,11 +333,10 @@ function renderCheckedBoxes() {
   });
 }
 
-// adding the class for the checkActiveBox
+// toggle the checked activeBox/es
 checkBoxes.forEach((checkBox, i) => {
   checkBox.addEventListener("click", () => {
     if (checkBox.checked) {
-      console.log("I'm checked");
       addons[i].classList.toggle("checked");
     } else {
       addons[i].classList.toggle("checked");
@@ -340,6 +359,18 @@ function run() {
   }`;
   sum = [];
 }
+
+// fourth section
+
+buttons[3].addEventListener("click", () => {
+  index++;
+  nextDOMElement[index - 1].classList.add("hide");
+  nextDOMElement[index].classList.remove("hide");
+});
+
+navigateBack[2].addEventListener("click", () => {
+  moveBackwardOneStep();
+});
 
 function returnPerfectNumber(value) {
   const result = value
