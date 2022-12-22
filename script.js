@@ -11,7 +11,8 @@ const buttons = document.querySelectorAll("button");
 const plans = document.querySelectorAll(".plan");
 const monthlyPlan = document.querySelectorAll(".plan__pricing");
 const planName = document.querySelectorAll(".plan__name");
-const toggle = document.querySelector(".toggle__section > i");
+const toggleContainer = document.querySelector(".border_container");
+const toggle = document.querySelector(".toggle");
 const addons = document.querySelectorAll(".add-on");
 const nextDOMElement = document.querySelectorAll(".iterator");
 
@@ -37,7 +38,7 @@ const addonMonthlyPricing = document.querySelectorAll(".addonMonthlyPricing");
 const checkBoxes = document.querySelectorAll('input[type="checkbox"]');
 const container = document.querySelector(".add-ons__selected");
 const addonYearlyPricing = document.querySelectorAll(".addonYearlyPricing");
-const yearlyToggle = document.querySelector(".toggle__section :last-child");
+const yearlyToggle = document.querySelector(".yearlyToggle");
 const selected__plan__summary = document.querySelector(
   ".selected__plan__summary"
 );
@@ -97,7 +98,7 @@ buttons[0].addEventListener("click", () => {
   checkActivePlan();
 });
 
-function conditionalsCheck() {
+const conditionalsCheck = () => {
   // if the input contains letters from A-Z and not a single number
   if (inputName.value.match(/[a-zA-Z]/g) && !inputName.value.match(/\d/g)) {
     nameValue = true;
@@ -116,10 +117,10 @@ function conditionalsCheck() {
   } else {
     showErrorMessage(2, "This field is required", 2);
   }
-}
+};
 
 // this accepts the errormessage index to be displayed, the errormessage, and the inputindex. Most likely the inputindex = errorindex
-function showErrorMessage(errorIndex, errorMsg, inputIndex) {
+const showErrorMessage = (errorIndex, errorMsg, inputIndex) => {
   errorMessage[errorIndex].textContent = errorMsg;
   errorMessage[errorIndex].style.color = "red";
   errorMessage[errorIndex].style.fontSize = "12px";
@@ -129,38 +130,38 @@ function showErrorMessage(errorIndex, errorMsg, inputIndex) {
     errorMessage[errorIndex].textContent = "";
     inputs[inputIndex].classList.remove("errorMessageBorder");
   }, 3000);
-}
+};
 
-function moveToNextStep() {
+const moveToNextStep = () => {
   // if the inputs fulfills the conditionalsCheck()
   if (nameValue === true && phoneNumber === true && email === true) {
     stepFurther();
   }
-}
+};
 
 // takes the user back one step the iteration flow
 navigateBack[0].addEventListener("click", () => {
   moveBackwardOneStep();
 });
 
-function checkActivePlan() {
+const checkActivePlan = () => {
   plans.forEach((plan, i) => {
     plan.addEventListener("click", () => {
       removePreviousActivePlan();
       plan.classList.add("plan__detail__selected");
     });
   });
-}
+};
 
-function removePreviousActivePlan() {
+const removePreviousActivePlan = () => {
   plans.forEach((plan) => {
     if (plan.classList.contains("plan__detail__selected")) {
       plan.classList.remove("plan__detail__selected");
     }
   });
-}
+};
 
-function stepFurther() {
+const stepFurther = () => {
   index++;
   stepsNavigator[index].classList.add("active__step");
 
@@ -170,9 +171,9 @@ function stepFurther() {
 
   // check for active step
   checkActiveStep();
-}
+};
 
-function moveBackwardOneStep() {
+const moveBackwardOneStep = () => {
   index--;
 
   stepsNavigator[index].classList.add("active__step");
@@ -182,13 +183,13 @@ function moveBackwardOneStep() {
   nextDOMElement[index].classList.remove("hide");
 
   nextDOMElement[index + 1].classList.add("hide");
-}
+};
 
-function checkActiveStep() {
+const checkActiveStep = () => {
   if (stepsNavigator[index - 1].classList.contains("active__step")) {
     stepsNavigator[index - 1].classList.remove("active__step");
   }
-}
+};
 
 /* 
   // BUTTON[1] - SECOND BTN
@@ -209,7 +210,7 @@ buttons[1].addEventListener("click", () => {
   renderSelectedPlan();
 });
 
-function renderSelectedPlan() {
+const renderSelectedPlan = () => {
   plans.forEach((plan, i) => {
     plan.addEventListener("click", () => {
       // emptying the innerHTML before rendering a new content to the DOM
@@ -229,11 +230,11 @@ function renderSelectedPlan() {
                           `;
     });
   });
-}
+};
 
-// toggle between monthly and yearly plans
-toggle.addEventListener("click", () => {
-  toggle.classList.toggle("fa-toggle-on");
+(toggle, toggleContainer).addEventListener("click", () => {
+  toggle.classList.toggle("toggle__active");
+
   activePlanColor[0].classList.toggle("plan__active");
   activePlanColor[1].classList.toggle("plan__active");
 
@@ -284,7 +285,7 @@ navigateBack[1].addEventListener("click", () => {
   container.textContent = "";
 });
 
-function isYear() {
+const isYear = () => {
   plans.forEach((plan, i) => {
     if (
       plan.classList.contains("plan__detail__selected") &&
@@ -307,9 +308,9 @@ function isYear() {
                           `;
     }
   });
-}
+};
 
-function renderCheckedBoxes() {
+const renderCheckedBoxes = () => {
   container.innerHTML = "";
   checkBoxes.forEach((checkBox, i) => {
     if (checkBox.checked) {
@@ -331,7 +332,7 @@ function renderCheckedBoxes() {
       container.insertAdjacentHTML("afterbegin", html);
     }
   });
-}
+};
 
 // toggle the checked activeBox/es
 checkBoxes.forEach((checkBox, i) => {
@@ -345,7 +346,7 @@ checkBoxes.forEach((checkBox, i) => {
 });
 
 // final page addition
-function run() {
+const run = () => {
   renderedSummaryColor.forEach((plan) => {
     sum.push(returnPerfectNumber(plan.textContent));
   });
@@ -358,7 +359,7 @@ function run() {
     yearlyToggle.classList.contains("plan__active") ? "yr" : "mo"
   }`;
   sum = [];
-}
+};
 
 // fourth section
 
@@ -372,7 +373,7 @@ navigateBack[2].addEventListener("click", () => {
   moveBackwardOneStep();
 });
 
-function returnPerfectNumber(value) {
+const returnPerfectNumber = (value) => {
   const result = value
     .replaceAll("$", "")
     .replaceAll("/", "")
@@ -380,4 +381,4 @@ function returnPerfectNumber(value) {
     .replaceAll("yr", "")
     .replaceAll("+", "");
   return Number(result);
-}
+};
