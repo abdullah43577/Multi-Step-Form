@@ -12,7 +12,6 @@ This is a solution to the [Multi-step form challenge on Frontend Mentor](https:/
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
-  - [Useful Resources](#useful-resources)
 - [Author](#author)
 
 ## Overview
@@ -63,10 +62,6 @@ Logic is everything in programming, If I was more logical while building this pr
 I'll continue developing myself on the logical aspects of building projects
 
 ```
-
-### Useful resources
-
-- [Resource 1](https://fontawesome.com/) - This helped me for implementing the toggle section of the code.
 
 ## Author
 
